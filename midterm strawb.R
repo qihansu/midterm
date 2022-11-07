@@ -129,7 +129,8 @@ df_Telone <- grep("Telone",
 
 
 ##1
-285*100=28500LB
+##Due to CWT can transfer with LB
+##285*100=28500LB
 
 
 
@@ -139,20 +140,23 @@ strawb_2016_cal_organ <- filter(strawb, Year == "2016" & State == "CALIFORNIA" &
 view(strawb_2016_cal_organ)
 library(gmodels)
 library(Rmisc)
-CI(as.numeric(strawb_2016_cal_organ$Value))
+
+margin_error <- 231304956*1.96*0.137
+lower.bound <- 231304956 - margin_error
+upper.bound <- 231304956 + margin_error
+print(c(lower.bound, upper.bound)) 
+
 
 ##3
 
 strawb_2016_cal_norgan <- filter(strawb, Year == "2016" & State == "CALIFORNIA" & Domain != "ORGANIC STATUS" )
-view(strawb_2016_cal_norgan)
-new <- filter(strawb_2016_cal_norgan, Value != "(NA)" & Value != "(D)" & Domain != "TOTAL")
+
+new <- filter(strawb_2016_cal_norgan,  Value != "(D)" & Domain != "TOTAL")
 view(new)
-margin <- 231304956*1.96*0.137
-margin
-highervalue <- 231304956+62110007
-highervalue
-lowervalue <- 231304956-62110007
-lowervalue
+##Due to the 'NA' didn't filter out,and the confidence interval that calculated was include negative value the answer we get was 'NA'
+
+
+
 
 ##4
 chemical <- filter(strawb, Domain != 'ORGANIC STATUS' & 
@@ -160,6 +164,9 @@ chemical <- filter(strawb, Domain != 'ORGANIC STATUS' &
                      Domain != 'FERTILIZER')
 chemical
 unique(chemical[11])
+
+
+
 
 ##5
 chemical_fl <- filter(strawb, State == 'FLORIDA' & 
