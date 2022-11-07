@@ -148,12 +148,13 @@ print(c(lower.bound, upper.bound))
 
 
 ##3
-
 strawb_2016_cal_norgan <- filter(strawb, Year == "2016" & State == "CALIFORNIA" & Domain != "ORGANIC STATUS" )
 
 new <- filter(strawb_2016_cal_norgan,  Value != "(D)" & Domain != "TOTAL")
 view(new)
-##Due to the 'NA' didn't filter out,and the confidence interval that calculated was include negative value the answer we get was 'NA'
+
+CI(as.numeric(strawb_2016_cal_norgan$Value))
+##The answer we get was NA
 
 
 
@@ -164,6 +165,7 @@ chemical <- filter(strawb, Domain != 'ORGANIC STATUS' &
                      Domain != 'FERTILIZER')
 chemical
 unique(chemical[11])
+
 
 
 
